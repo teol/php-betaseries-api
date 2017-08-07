@@ -34,9 +34,20 @@ $betaseries = new \Betaseries\Betaseries('VOTRE_CLE_API', 'TOKEN_UTILISATEUR')
 $client = new \Betaseries\Client($betaseries);
 ```
 
-Pour récupérer le **token utilisateur**, ce wrapper ne permet pas (encore) de se [connecter via OAuth2, Simili OAuth ou identification basique](http://www.betaseries.com/api/docs#identification-api).
+Pour récupérer le **token utilisateur**, ce wrapper ne permet pas (encore) de se [connecter via OAuth2 ou Simili OAuth](http://www.betaseries.com/api/docs#identification-api).
 Cependant vous pouvez utiliser le paquet suivant [rtransat/oauth2-betaseries](https://github.com/florentsorel/oauth2-betaseries) pour se connecter via OAuth2 et récupérer votre token.
 Il s'agit d'un provider pour le paquet [oauth2 de thephpleague](https://github.com/thephpleague/oauth2-client/blob/master/README.PROVIDERS.md) qui vous permettra de gérer la connexion OAuth2 de Betaseries.
+
+Identification basique
+-----------------
+```php
+$options = [
+    'user' => 'USER',
+    'md5Password' => 'MD5-HASHED-PASSWORD',
+];
+$client->authenticate(\Betaseries\Client::AUTH_BASIC, $options);
+var_dump($client->isAuthenticated()); //bool(true)
+```
 
 Utilisation générale
 -----------------

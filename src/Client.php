@@ -9,8 +9,10 @@ class Client
     private $options = [
         'base_uri' => 'https://api.betaseries.com/',
     ];
-
     private $httpClient;
+
+    const AUTH_BASIC = '\Betaseries\Api\Auth\BasicAuth';
+    const OAUTH = '\Betaseries\Api\Auth\OAuth'; //TODO
 
     /**
      * Client constructor.
@@ -96,5 +98,45 @@ class Client
         } catch (\InvalidArgumentException $e) {
             throw new \BadMethodCallException(sprintf('Undefined method called: "%s"', $name));
         }
+    }
+
+    /**
+     * @param string $authClass
+     * @param array $options
+     * @return bool
+     */
+    public function authenticate($authClass, $options)
+    {
+        $auth = new $authClass($this);
+        $token = $auth->authenticate($options);
+        if($token){
+            $this->options['token'] = $token;
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isAuthenticated()
+    {
+        return !empty($this->options['token']);
+    }
+
+    /**
+     * @return array
+     */
+    protected function getOptions()
+    {
+        return $this->options;
+    }
+
+    /**
+     * @param array $options
+     */
+    protected function setOptions($options)
+    {
+        $this->options = $options;
     }
 }
