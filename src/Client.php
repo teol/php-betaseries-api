@@ -12,6 +12,7 @@ class Client
     private $httpClient;
 
     const AUTH_BASIC = '\Betaseries\Api\Auth\BasicAuth';
+    const OAUTH = '\Betaseries\Api\Auth\OAuth';
 
     /**
      * Client constructor.
