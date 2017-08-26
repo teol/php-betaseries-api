@@ -12,7 +12,6 @@ class Client
     private $httpClient;
 
     const AUTH_BASIC = '\Betaseries\Api\Auth\BasicAuth';
-    const OAUTH = '\Betaseries\Api\Auth\OAuth'; //TODO
 
     /**
      * Client constructor.
@@ -109,7 +108,7 @@ class Client
     {
         $auth = new $authClass($this);
         $token = $auth->authenticate($options);
-        if($token){
+        if ($token) {
             $this->options['token'] = $token;
             return true;
         }
